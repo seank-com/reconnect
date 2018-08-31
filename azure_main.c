@@ -92,8 +92,20 @@ void azure_task(void *pvParameter)
     vTaskDelete(NULL);
 }
 
+int myCustomLogger(const char* format, va_list ap)
+{
+    char buffer[256];
+    vsnprintf(buffer, 256, format, ap);
+    buffer[255] = '\0';
+    printf("SEANK--");
+    printf(buffer);
+    return 0;
+}
+
 void app_main()
 {
+    esp_log_set_vprintf(myCustomLogger);
+
     nvs_flash_init();
     initialise_wifi();
 
